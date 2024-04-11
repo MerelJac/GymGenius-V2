@@ -2,18 +2,10 @@
 import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Profile from './pages/Users/profile';
-import Header from './components/Header/header';
-import Login from './pages/Users/login';
-import NotFound from './pages/Error/not-found';
 
-
-function App() {
+function UserDashboard() {
     const [ user, setUser ] = useState([]);
     const [ profile, setProfile ] = useState([]);
-    const [auth, setAuth] = useState(false);
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -32,7 +24,6 @@ function App() {
                     })
                     .then((res) => {
                         setProfile(res.data);
-                        auth(true)
                     })
                     .catch((err) => console.log(err));
             }
@@ -44,28 +35,27 @@ function App() {
     const logOut = () => {
         googleLogout();
         setProfile(null);
-        setAuth(false);
     };
 
     return (
-      <GoogleOAuthProvider clientId="117194930399-rk5mmhkta23ovi0odb2ioc0ik3944o9d.apps.googleusercontent.com">
-        <BrowserRouter>
-        <div className="App">
-          <Header />
-        <Routes>
-        <Route path="/" element={<Login setUser={setUser} setProfile={setProfile} />} />
-        {user ? (
-          <>
-            <Route path="/profile" element={<Profile profile={profile} login={login} logout={logOut}/>} />
-          </>
-        ) : (
-          <Route path="*" element={<NotFound />} />
-        )}
-      </Routes>
-    </div>
-        </BrowserRouter>
-        </GoogleOAuthProvider>
+        <div>
+            <h2>React Google Login</h2>
+            <br />
+            <br />
+            {profile ? (
+                <div>
+                    <img src={profile.picture} alt="user image" />
+                    <h3>User Logged in</h3>
+                    <p>Name: {profile.name}</p>
+                    <p>Email Address: {profile.email}</p>
+                    <br />
+                    <br />
+                    <button onClick={logOut}>Log out</button>
+                </div>
+            ) : (
+                <button onClick={login}>Sign in with Google 🚀 </button>
+            )}
+        </div>
     );
 }
-export default App;
-
+export default UserDashboard;
