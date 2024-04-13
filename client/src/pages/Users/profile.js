@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Profile(profile, logOut) {
+export default function Profile({profile, logOut}) {
 
     return (
 

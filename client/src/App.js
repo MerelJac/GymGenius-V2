@@ -8,25 +8,18 @@ import NotFound from './pages/Error/not-found';
 import axios from 'axios';
 
 function App() {
-  const [ user, setUser ] = useState(null);
-  const [ profile, setProfile ] = useState(null);
+  const [ user, setUser ] = useState([]);
+  const [ profile, setProfile ] = useState([]);
   const [auth, setAuth] = useState(false);
 
   const login = useGoogleLogin({
     onSuccess: (codeResponse) => {
-      console.log('Login successful:', codeResponse);
-
       setUser(codeResponse); 
       setAuth(true);
-      console.log(auth, user);
 
     },
     onError: (error) => console.log('Login Failed:', error)
 });
-
-const isAuthenticated = () => {
-  return auth;
-};
 
 useEffect(
   () => {
@@ -73,14 +66,14 @@ useEffect(() => {
               path="/"
               element={<Login login={login}/>}
             />
-            {isAuthenticated() ? (
-              <Route
-                path="/profile"
-                element={<Profile  profile={profile} logout={logOut}/>}
-              />
-            ) : (
-              <Route path="*" element={<NotFound />} />
-            )}
+          {auth ? (
+            <Route
+              path="/profile"
+              element={<Profile profile={profile} logout={logOut}/>}
+            />
+          ) : (
+            <Route path="*" element={<NotFound />} />
+          )}
           </Routes>
         </div>
       </BrowserRouter>
