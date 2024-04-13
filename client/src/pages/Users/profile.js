@@ -1,6 +1,6 @@
 import React from 'react';
 
-function Profile(profile, login, logOut) {
+export default function Profile(profile, logOut) {
 
     return (
 
@@ -8,7 +8,6 @@ function Profile(profile, login, logOut) {
             <h2>React Google Login</h2>
             <br />
             <br />
-            {profile ? (
                 <div>
                     <img src={profile.picture} alt="user image" />
                     <h3>User Logged in</h3>
@@ -18,10 +17,7 @@ function Profile(profile, login, logOut) {
                     <br />
                     <button onClick={logOut}>Log out</button>
                 </div>
-            ) : (
-                <button onClick={login}>Sign in with Google 🚀 </button>
-            )}
         </div>
     );
 }
-export default Profile;
+

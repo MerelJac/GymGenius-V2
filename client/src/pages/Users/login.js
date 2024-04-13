@@ -1,19 +1,16 @@
-import React from 'react'
-import { useGoogleLogin } from '@react-oauth/google';
+import React from 'react';
+import PropTypes from 'prop-types';
 
 
+export default function Login({login}) {
 
-export default function Login(setUser) {
-    const login = useGoogleLogin({
-        onSuccess: (codeResponse) => setUser(codeResponse),
-        onError: (error) => console.log('Login Failed:', error)
-    });
-
-  return (
+return (
     <div>
-
-    <button onClick={login}>Sign in with Google 🚀 </button>
-
+      <button onClick={login}>Sign in with Google 🚀</button>
     </div>
-  )
+)
 }
+
+Login.propTypes = {
+  login: PropTypes.func.isRequired,
+};
