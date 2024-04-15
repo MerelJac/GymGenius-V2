@@ -4,16 +4,15 @@ import passport from 'passport';
 import cors from 'cors';
 import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 
+// Middleware
 const app = express();
 const PORT = '3001';
 app.use(cors());
-
-// Load environment variables from .env file
 dotenv.config();
 
 passport.use(new GoogleStrategy({
-  clientID: process.env.GOOGLE_CLIENT_ID, // Replace with your Google OAuth client ID
-  clientSecret: process.env.GOOGLE_CLIENT_SECRET, // Replace with your Google OAuth client secret
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
   callbackURL: '/auth/google/callback'
 }, (accessToken, refreshToken, profile, done) => {
   // Here, you would typically create or retrieve a user from your database

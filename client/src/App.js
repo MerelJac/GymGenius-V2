@@ -41,7 +41,7 @@ function App() {
 
     return (
         <div>
-            <Header/>
+            <Header logOut={logOut} login={login} profile={profile}/>
             {profile ? (
                 <div>
                     <img src={profile.picture} alt="user_image" />
