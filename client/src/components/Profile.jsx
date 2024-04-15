@@ -9,7 +9,7 @@ export default function Profile({profile, logOut}) {
             <br />
             <br />
                 <div>
-                    <img src={profile.picture} alt="user image" />
+                    <img src={profile.picture} alt="user_image" />
                     <h3>User Logged in</h3>
                     <p>Name: {profile.name}</p>
                     <p>Email Address: {profile.email}</p>
