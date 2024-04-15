@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import Header from './components/Header';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import Profile from './components/Profile'; 
 
 function App() {
     const [ user, setUser ] = useState([]);
@@ -39,23 +41,24 @@ function App() {
         sessionStorage.removeItem('user')
     };
 
+    
+    const router = createBrowserRouter([
+        {
+          path: "/",
+          element: <Profile profile={profile} logOut={logOut}/>,
+        }
+      ]);
+
     return (
         <div>
             <Header logOut={logOut} login={login} profile={profile}/>
             {profile ? (
-                <div>
-                    <img src={profile.picture} alt="user_image" />
-                    <h3>User Logged in</h3>
-                    <p>Name: {profile.name}</p>
-                    <p>Email Address: {profile.email}</p>
-                    <br />
-                    <br />
-                    <button onClick={logOut}>Log out</button>
-                </div>
+                 <RouterProvider router={router} />
             ) : (
                 <button onClick={() => login()}>Sign in with Google 🚀 </button>
             )}
         </div>
+        
     );
 }
 export default App;
