@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
+import Header from './components/Header';
 
 function App() {
     const [ user, setUser ] = useState([]);
@@ -23,6 +24,7 @@ function App() {
                     })
                     .then((res) => {
                         setProfile(res.data);
+                        sessionStorage.setItem('user', res.data.id)
                     })
                     .catch((err) => console.log(err));
             }
@@ -34,13 +36,12 @@ function App() {
     const logOut = () => {
         googleLogout();
         setProfile(null);
+        sessionStorage.removeItem('user')
     };
 
     return (
         <div>
-            <h2>React Google Login</h2>
-            <br />
-            <br />
+            <Header/>
             {profile ? (
                 <div>
                     <img src={profile.picture} alt="user_image" />
